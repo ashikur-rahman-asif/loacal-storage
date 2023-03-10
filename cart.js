@@ -30,6 +30,11 @@ const saveProductTOLocalStorage = (productField, quantityField) => {
 
 const displayProductsFromSLocalStorage = () => {
     const savedCart = getSToredShoppingCart()
+    for (const product in savedCart) {
+        // console.log(product)
+        const quantity = savedCart[product]
+        showProduct(product,quantity)
+    }
     
 }
 displayProductsFromSLocalStorage()
