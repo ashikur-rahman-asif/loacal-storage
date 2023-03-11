@@ -1,40 +1,48 @@
 const addProduct = () => {
-    const productField= document.getElementById('product-name').value
-    const quantityField = document.getElementById('product-quantity').value
-    // productField.value = ''
-    // quantityField.value=''
-    console.log(productField,quantityField)
-    showProduct(productField, quantityField)
-    saveProductTOLocalStorage(productField, quantityField)
-}
-const showProduct = (productField, quantityField) => {
-    const ul= document.getElementById('product-container')
-    const li = document.createElement('li')
-    li.innerText = `${productField}: ${quantityField}`
-    ul.appendChild(li)
-}
-const getSToredShoppingCart = () => {
-    let  cart= {}
-    const storedCard = localStorage.getItem('cart')
-    if (storedCard) {
-        cart= JSON.parse(storedCard)
-    }
-    return cart
-}
-const saveProductTOLocalStorage = (productField, quantityField) => {
-    const cart = getSToredShoppingCart()
-    cart[productField] = quantityField
-    const cartStringified = JSON.stringify(cart)
-    localStorage.setItem('cart',cartStringified)
+    const productField = document.getElementById('product-name');
+    const quantityField = document.getElementById('product-quantity');
+    const product = productField.value;
+    const quantity = quantityField.value;
+    productField.value='';
+    quantityField.value = '';
+
+
+    console.log(product, quantity);
+    displayProduct(product, quantity);
+    saveProductToLocalStorage(product, quantity);
 }
 
-const displayProductsFromSLocalStorage = () => {
-    const savedCart = getSToredShoppingCart()
-    for (const product in savedCart) {
-        // console.log(product)
-        const quantity = savedCart[product]
-        showProduct(product,quantity)
-    }
-    
+const displayProduct = (product, quantity) =>{
+    const ul = document.getElementById('product-container');
+    const li = document.createElement('li');
+    li.innerText = `${product}: ${quantity}`;
+    ul.appendChild(li);
 }
-displayProductsFromSLocalStorage()
+
+const getStoredShoppingCart = () =>{
+    let cart = {};
+    const storedCart = localStorage.getItem('cart');
+    if(storedCart){
+        cart = JSON.parse(storedCart);
+    }
+    return cart;
+}
+
+const saveProductToLocalStorage = (product, quantity) => {
+    const cart = getStoredShoppingCart();
+    cart[product] = quantity;
+    const cartStringified = JSON.stringify(cart);
+    localStorage.setItem('cart', cartStringified)
+}
+
+const displayProductsFromLocalStorage = () => {
+    const savedCart = getStoredShoppingCart();
+    console.log(savedCart);
+    for(const product in savedCart){
+        const quantity = savedCart[product];
+        console.log(product, quantity);
+        displayProduct(product, quantity);
+    }
+}
+
+displayProductsFromLocalStorage();
